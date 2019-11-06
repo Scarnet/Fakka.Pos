@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:children="clr-namespace:Fakka.Pos.Components.Children"
+             xmlns:resources="clr-namespace:Fakka.Pos.Resources"
+             xmlns:converter="clr-namespace:Fakka.Pos.Converter"
+             mc:Ignorable="d"
+             x:Class="Fakka.Pos.Templates.OrdersTemplate">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:BoolToSelectionColorConverter x:Key="BoolToColorBackgroundConverter" SelectedColor="Orange" UnselectedColor="{StaticResource LightGreyColor}" />
+            <converter:BoolToSelectionColorConverter x:Key="BoolToColorTextConverter" SelectedColor="White" UnselectedColor="Orange" />
+
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout Spacing="10" Margin="40, 5, 0, 5" Padding="20" BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorBackgroundConverter}}">
+            <StackLayout Orientation="Horizontal">
+                <Label Style="{StaticResource DefaultBoldBlackLabel}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Text="{Binding Name}" />
+                <Label Style="{StaticResource DefaultOrangeLabel}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" TextColor="{Binding IsSelected, Converter={StaticResource BoolToColorTextConverter}}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Total, StringFormat='{0:N}'}" />
+                            <Span Text=" " />
+                            <Span Text="{resources:Translate Ryial}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Text="{Binding HijriDurationFrom}"/>
+                <Label VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Text="{Binding HijriDurationTo}"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <children:ChildImage ChildImageSource="{Binding ChildImage}"
+                                     HasImage="{Binding ChildHasImage}"
+                                     ChildName="{Binding ChildName}"
+                                     ParentName="{Binding ParentName}"
+                                     BorderColor="Orange"
+                                     FontSize="8"
+                                     Radius="10" />
+                <Label VerticalOptions="CenterAndExpand">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding ChildName}" />
+                            <Span Text=" " />
+                            <Span Text="{Binding ParentName}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label Style="{StaticResource SmallBoldBlackLabel}" Text="{Binding ChildCode}" />
+            </StackLayout>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

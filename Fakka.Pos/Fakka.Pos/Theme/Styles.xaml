@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
+    x:Class="Fakka.Pos.Theme.Styles"
+    xmlns:controls="clr-namespace:Fakka.Pos.Controls"
+    >
+
+
+    <!--COLORS-->
+    <Color x:Key="PrimaryColor">#188776</Color>
+    <!--<Color x:Key="SecondaryColor">#26a66a</Color>-->
+    <Color x:Key="SecondaryColor">#FFf7941d</Color>
+    <!--<Color x:Key="ShadowColor">#0000004D</Color> b2b2b2-->
+    <Color x:Key="LightShadowColor">#22DEDEDE</Color>
+    <Color x:Key="ShadowColor">#4D000000</Color>
+    <Color x:Key="GreyColor">#FF555555</Color>
+    <Color x:Key="LightGreyColor">#FFe6e6e6</Color>
+    <Color x:Key="BlackColor">#000000</Color>
+    <Color x:Key="WhiteColor">#FFFFFF</Color>
+    <Color x:Key="ErrorColor">#FF0000</Color>
+    <Color x:Key="ItemSelectionColor">#530000</Color>
+    <Color x:Key="LoadingSpinnerColor">#188776</Color>
+    <Color x:Key="LoadingLabelColor">#188776</Color>
+    <Color x:Key="DefaultChildImageBackground">#f7941d</Color>
+    
+    <!--SIZES-->
+    <!--<system:Double x:Key="FontSizeXLarge">24</system:Double>
+    <system:Double x:Key="FontSizeLarge">16</system:Double>
+    <system:Double x:Key="FontSizeDefault">14</system:Double>
+    <system:Double x:Key="FontSizeSmall">12</system:Double>
+    <system:Double x:Key="ButtonHeight">60</system:Double>-->
+
+    <OnPlatform x:Key="FontSizeXLarge"
+        x:TypeArguments="x:Double"  Default="24">
+        <!--<On Platform="iOS" Value="28" />
+        <On Platform="Android" Value="24" />-->
+
+    </OnPlatform>
+    <OnPlatform x:Key="FontSizeLarge"
+                x:TypeArguments="x:Double" Default="15">
+        <!--<On Platform="iOS" Value="16" />
+        <On Platform="Android" Value="16" />-->
+    </OnPlatform>
+
+    <OnPlatform x:Key="FontSizeDefault"
+                x:TypeArguments="x:Double" Default="13">
+        <!--<On Platform="iOS" Value="15" />
+        <On Platform="Android" Value="15" />-->
+    </OnPlatform>
+
+    <OnPlatform x:Key="TabFontSize" x:TypeArguments="x:Double" iOS="11" Android="13"/>
+
+    <OnPlatform x:Key="FontSizeSmall"
+                x:TypeArguments="x:Double" Default="11">
+        <!--<On Platform="iOS" Value="14" />
+        <On Platform="Android" Value="13" />-->
+    </OnPlatform>
+
+    <OnPlatform x:Key="FontSizeMicro"
+                x:TypeArguments="x:Double" Default="9">
+        <!--<On Platform="iOS" Value="9" />
+        <On Platform="Android" Value="9" />-->
+    </OnPlatform>
+
+    <OnPlatform x:Key="ButtonHeight"
+                x:TypeArguments="x:Double" iOS="40" Android="45" />
+    <!-- <On Platform="iOS" Value="30" />
+        <On Platform="Android" Value="40" />-->
+
+
+    <OnPlatform x:Key="FontFamily"
+                x:TypeArguments="x:String" Android="din-next-lt-w23-regular.ttf#DIN NEXT" iOS="DIN Next LT W23"/>
+    <!--<On Platform="iOS" Value="30" />-->
+    <!--<On Platform="Android" Value="din-next-lt-w23-regular.ttf#DIN NEXT" />
+        <On Platform="iOS" Value="din-next-lt-w23-regular.ttf#DIN NEXT" />-->
+
+
+    <OnPlatform x:Key="ButtonCornerRadius"
+                x:TypeArguments="x:Int32" iOS="20" Android="50" />
+
+    <OnPlatform x:Key="FrameShadow"
+                x:TypeArguments="x:Boolean" iOS="False" Android="True" />
+
+    <!--Label Override-->
+
+    <Style TargetType="Label" >
+        <Setter Property="Margin">
+            <Setter.Value>
+                <OnPlatform x:TypeArguments="Thickness" iOS="0,5,0,5"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Picker" >
+        <Setter Property="Margin">
+            <Setter.Value>
+                <OnPlatform x:TypeArguments="Thickness" iOS="0,5,0,5"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:CustomEntry" >
+        <Setter Property="Margin">
+            <Setter.Value>
+                <OnPlatform x:TypeArguments="Thickness" iOS="0,5,0,5"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="StackLayout" >
+        <Setter Property="Spacing">
+            <Setter.Value>
+                <OnPlatform x:TypeArguments="x:Double" iOS="10"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Grid" >
+        <Setter Property="RowSpacing">
+            <Setter.Value>
+                <OnPlatform x:TypeArguments="x:Double" iOS="10"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--LAYOUTS-->
+
+    <Style x:Key="PageHeaderBackground" TargetType="Layout">
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+    </Style>
+
+
+    <!--<Style  TargetType="ScrollView">
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+    </Style>-->
+
+    <Style x:Key="CustomDefaultButton" TargetType="StackLayout">
+        <Setter Property="HeightRequest" Value="{StaticResource ButtonHeight}"  />
+        <Setter Property="WidthRequest" Value="200"  />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="Padding" Value="10" />
+    </Style>
+
+    <Style x:Key="CustomButtonLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+    </Style>
+
+    <!--BUTTONS-->
+    <Style x:Key="DefaultPrimaryButton" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}"  />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="{StaticResource ButtonHeight}"  />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="CornerRadius" Value="{StaticResource ButtonCornerRadius}" />
+
+    </Style>
+
+    <Style x:Key="TransactionButton" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}"  />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+    </Style>
+    <Style x:Key="CancelButton" TargetType="Button" BasedOn="{StaticResource TransactionButton}">
+        <Setter Property="BackgroundColor" Value="Red" />
+    </Style>
+    <!--LABELS-->
+    <Style x:Key="ErrorLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource ErrorColor}"  />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
+    <Style x:Key="PageHeaderLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="PageHeaderEntry" TargetType="Entry">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}"/>
+        <Setter Property="PlaceholderColor" Value="{StaticResource WhiteColor}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+    
+    <Style x:Key="DefaultPrimaryLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"/>
+    </Style>
+
+    <Style x:Key="LargePrimaryLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"/>
+    </Style>
+
+    <Style x:Key="XLargePrimaryLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeXLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"/>
+    </Style>
+
+
+
+    <Style x:Key="DefaultGreyLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource GreyColor}"/>
+    </Style>
+
+    <Style x:Key="SmallGreyLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="TextColor" Value="{StaticResource GreyColor}"/>
+    </Style>
+
+    <Style x:Key="MicroGreyLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMicro}" />
+        <Setter Property="TextColor" Value="{StaticResource GreyColor}"/>
+    </Style>
+
+    <Style x:Key="MicroWhiteLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}"/>
+    </Style>
+
+    <Style x:Key="DefaultBlackLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource BlackColor}"/>
+    </Style>
+
+    <Style x:Key="DefaultBoldBlackLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource BlackColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+    <Style x:Key="SmallBoldBlackLabel" TargetType="Label" BasedOn="{StaticResource DefaultBoldBlackLabel}">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+    </Style>
+    <Style x:Key="LargeBoldBlackLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource BlackColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+    <Style x:Key="MicroBlackLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMicro}" />
+        <Setter Property="TextColor" Value="{StaticResource BlackColor}"/>
+    </Style>
+    <Style x:Key="MicroBoldBlackLabel" TargetType="Label" BasedOn="{StaticResource MicroBlackLabel}">
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+    <Style x:Key="ListTitleLabel" TargetType="Label" BasedOn="{StaticResource LargeBoldBlackLabel}">
+        <Setter Property="LineBreakMode" Value="TailTruncation"/>
+    </Style>
+    <Style x:Key="XLargeBoldBlackLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeXLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource BlackColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="XLargeBoldSecondaryLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeXLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="LargeBoldSecondaryLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="DefaultBoldSecondaryLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+
+
+    <Style x:Key="SmallBlackLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="TextColor" Value="{StaticResource BlackColor}"/>
+    </Style>
+
+    <Style x:Key="DefaultBoldWhiteLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="LargeBoldWhiteLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}"/>
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <!--ENTRIES-->
+    <Style x:Key="DefaultPrimaryEntry" TargetType="Entry">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"  />
+        <Setter Property="PlaceholderColor" Value="{StaticResource GreyColor}"  />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+
+    </Style>
+
+    <Style x:Key="StockItemLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+    </Style>
+    <Style x:Key="StockItemFooterLabel" TargetType="Label" BasedOn="{StaticResource StockItemLabel}">
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"/>
+    </Style>
+    <Style x:Key="SelectedItemFooterLabel" TargetType="Label" BasedOn="{StaticResource StockItemLabel}">
+        <Setter Property="TextColor" Value="{StaticResource ItemSelectionColor}" />
+    </Style>
+    <!--Pickers-->
+    <Style x:Key="DefaultBoldPrimaryPicker" TargetType="Picker">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"  />
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="DefaultBoldGreyPicker" TargetType="Picker">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource GreyColor}"  />
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+
+    <!--Date Pickers-->
+
+    <Style x:Key="DefaultBoldPrimaryDatePicker" TargetType="DatePicker">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"  />
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="DefaultBoldGreyDatePicker" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource GreyColor}"  />
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="TabsWhiteLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource TabFontSize}" />
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}"/>
+    </Style>
+    <!--Time Pickers-->
+
+    <Style x:Key="DefaultBoldPrimaryTimePicker" TargetType="TimePicker">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"  />
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="DefaultBoldGreyTimePicker" TargetType="TimePicker">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        <Setter Property="TextColor" Value="{StaticResource GreyColor}"  />
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+    <Style x:Key="LandingButton" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily}" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Padding" Value="50, 20" />
+    </Style>
+    
+    <Style x:Key="DefaultOrangeLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="Orange" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+    </Style>
+
+    <Style x:Key="LargeOrangeLabel" TargetType="Label" BasedOn="{StaticResource DefaultOrangeLabel}">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+    </Style>
+
+
+    <Style x:Key="StepperButton" TargetType="Button">
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="HeightRequest" Value="30" />
+        <Setter Property="WidthRequest" Value="30" />
+    </Style>
+
+    <Style x:Key="SwitcherButton" TargetType="Button">
+        <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+    </Style>
+</ResourceDictionary>
+

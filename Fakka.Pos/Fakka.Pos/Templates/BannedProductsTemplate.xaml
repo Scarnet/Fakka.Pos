@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             mc:Ignorable="d"
+             x:Class="Fakka.Pos.Templates.BannedProductsTemplate">
+    <ContentView.Content>
+        <Grid Margin="5, 0">
+            <forms:CachedImage 
+                               HeightRequest="25" 
+                               WidthRequest="25"
+                               Source="{Binding Image}">
+                <forms:CachedImage.Transformations>
+                    <transformations:CircleTransformation />
+                </forms:CachedImage.Transformations>
+            </forms:CachedImage>
+
+            <Frame x:Name="BannedSign"
+                   HorizontalOptions="End"
+                   VerticalOptions="Start"
+                   Padding="0" 
+                   HeightRequest="15"
+                   WidthRequest="15"
+                   CornerRadius="7.5"
+                   BackgroundColor="Red">
+                <Label Text="!" 
+                       FontSize="{StaticResource FontSizeSmall}"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Center" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center" 
+                       TextColor="White" />
+            </Frame>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

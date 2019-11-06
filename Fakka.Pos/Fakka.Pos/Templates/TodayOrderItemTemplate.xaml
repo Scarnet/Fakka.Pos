@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:converters="clr-namespace:Fakka.Core.Converters;assembly=Fakka.Core"
+             mc:Ignorable="d"
+             x:Class="Fakka.Pos.Templates.TodayOrderItemTemplate">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:BytesToImageConverter x:Key="BytesToImageConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout Orientation="Horizontal" Spacing="5" Margin="10">
+            <forms:CachedImage HorizontalOptions="Start" Source="{Binding Image}" HeightRequest="20" WidthRequest="20">
+                <forms:CachedImage.Transformations>
+                    <transformations:CircleTransformation />
+                </forms:CachedImage.Transformations>
+            </forms:CachedImage>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Label Style="{StaticResource SmallBlackLabel}" HorizontalOptions="FillAndExpand" Text="{Binding Name}" />
+                <Label Style="{StaticResource SmallBlackLabel}" Margin="30,0,0,0" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" Text="{Binding Quantity}" />
+            </StackLayout>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

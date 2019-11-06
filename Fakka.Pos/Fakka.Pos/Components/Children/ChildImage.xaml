@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:converters="clr-namespace:Fakka.Core.Converters;assembly=Fakka.Core"
+             mc:Ignorable="d"
+             x:Class="Fakka.Pos.Components.Children.ChildImage"
+             x:Name="this">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Frame x:Name="container" Padding="1" Margin="0" HorizontalOptions="Center" 
+            VerticalOptions="Center" CornerRadius="{Binding Radius, Source=this}" BorderColor="Transparent" HasShadow="False">
+        <Grid>
+            <Label x:Name="InitialsLabel" 
+                                   IsVisible="False"
+                                   HorizontalOptions="Center" 
+                                   FontSize="Large" 
+                                   TextColor="White" 
+                                   VerticalOptions="Center" 
+                                   HorizontalTextAlignment="Center" 
+                                   VerticalTextAlignment="Center" />
+
+            <ffimageloading:CachedImage x:Name="image"
+                                        Error="Image_Error"
+                                        LoadingPlaceholder="child_icon"
+                                        ErrorPlaceholder="child_icon"
+                                        Source="{Binding ChildImageSource, Source={x:Reference this}}"
+                                        Aspect="AspectFill">
+                <ffimageloading:CachedImage.Transformations>
+                    <fftransformations:CircleTransformation/>
+                </ffimageloading:CachedImage.Transformations>
+            </ffimageloading:CachedImage>
+
+        </Grid>
+    </Frame>
+</ContentView>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             mvvm:ViewModelLocator.AutowireViewModel="True"
+             xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:Fakka.Pos.Controls"
+             xmlns:resources="clr-namespace:Fakka.Pos.Resources"
+             x:Class="Fakka.Pos.Views.LoginPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <controls:CustomContentPage HasBackgroundImage="True" BackgroundImage="splash.png" BackgroundOpacity="0.3">
+        <controls:CustomContentPage.ContentView>
+            <ScrollView  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+                <StackLayout Padding="20,0,20,0">
+
+                    <!--Logo-->
+                    <StackLayout Margin="0,50,0,50" VerticalOptions="Center">
+                        <Image Aspect="AspectFit" Source="fakka_logo.png" HeightRequest="70"/>
+                    </StackLayout>
+
+                    <!--Email-->
+                    <controls:CustomEntry
+                                      EntryStyle="{StaticResource DefaultPrimaryEntry}"
+                                      Placeholder="{resources:Translate Username}"
+                                      ValidatableObject="{Binding Username}"
+                                      ValidationCommand="{Binding UsernameValidationCommand}"/>
+
+
+                    <!--Password-->
+                    <controls:CustomEntry IsPassword="True"
+                                      EntryStyle="{StaticResource DefaultPrimaryEntry}"
+                                      Placeholder="{resources:Translate Password}"
+                                      ValidatableObject="{Binding Password, Mode=TwoWay}"
+                                      ValidationCommand="{Binding PasswordValidationCommand}"/>
+
+
+                    <!--Login-->
+
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Button Text="{resources:Translate Login}" 
+                                    WidthRequest="200" 
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource DefaultPrimaryButton}"
+                                    Command="{Binding LoginCommand}"
+                                />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </controls:CustomContentPage.ContentView>
+    </controls:CustomContentPage>
+</ContentPage>

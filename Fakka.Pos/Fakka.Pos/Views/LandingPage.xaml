@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Fakka.Pos.Controls"
+             xmlns:resources="clr-namespace:Fakka.Pos.Resources"
+             xmlns:effects="clr-namespace:Fakka.Pos.Effects"
+             xmlns:coreEffects="clr-namespace:Fakka.Core.Effects;assembly=Fakka.Core"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Fakka.Pos.Views.LandingPage">
+
+    <controls:CustomContentPage HasBackgroundImage="True" BackgroundImage="splash.png" BackgroundOpacity="0.3">
+        <controls:CustomContentPage.ContentView>
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <StackLayout Padding="20,20,20,0">
+
+                    <!--Logo-->
+                    <StackLayout Margin="0,50,0,50" VerticalOptions="Center">
+                        <Image Aspect="AspectFit" Source="fakka_logo.png" HeightRequest="70"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="20" Spacing="50" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+                        <!--Simple POS-->
+                        <Button Style="{StaticResource LandingButton}" 
+                                coreEffects:ShadowEffect.DistanceX="10"  
+                                coreEffects:ShadowEffect.DistanceY="10"  
+                                coreEffects:ShadowEffect.Radius="20"  
+                                IsEnabled="False"
+                                Text="{resources:Translate SimplePos}"
+                                Command="{Binding SimplePosCommand}">
+                            <Button.Effects>
+                                <effects:ViewShadowEffect />
+                            </Button.Effects>
+                        </Button>
+
+                        <!--Full POS-->
+                        <Grid>
+
+                            <Button Style="{StaticResource LandingButton}"  
+                                    coreEffects:ShadowEffect.DistanceX="10" 
+                                    coreEffects:ShadowEffect.DistanceY="10"  
+                                    coreEffects:ShadowEffect.Radius="20" 
+                                    Text="{resources:Translate FullPos}"
+                                    Command="{Binding FullPosCommand}">
+                                <Button.Effects>
+                                    <effects:ViewShadowEffect />
+                                </Button.Effects>
+                            </Button>
+
+                        </Grid>
+
+                    </StackLayout>
+
+                    <!--Login-->
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="50">
+                        <Button Text="{resources:Translate Logout}"
+                                    WidthRequest="200" 
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource DefaultPrimaryButton}"
+                                    Command="{Binding LogoutCommand}"
+                                />
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+
+
+        </controls:CustomContentPage.ContentView>
+    </controls:CustomContentPage>
+</ContentPage>

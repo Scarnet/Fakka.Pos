@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fakka.Pos.Controls.LoadingIndicatorPage"
+             BackgroundColor="Transparent"
+             >
+    <ContentPage.Content>
+        <StackLayout      VerticalOptions="FillAndExpand"
+                          HorizontalOptions="FillAndExpand">
+            <StackLayout 
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand">
+                <Frame CornerRadius="5"
+                           BorderColor="Transparent"
+                           BackgroundColor="{StaticResource BlackColor}"
+                           Padding="20"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" >
+                    <StackLayout HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="FillAndExpand" >
+                        <ActivityIndicator IsRunning="True" Color ="{StaticResource LoadingSpinnerColor}" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        <Label x:Name="IndicatorLabel" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="{StaticResource LoadingLabelColor}"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

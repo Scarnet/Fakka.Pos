@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:templates="clr-namespace:Fakka.Pos.Templates"
+             xmlns:resources="clr-namespace:Fakka.Pos.Resources"
+             mc:Ignorable="d"
+             x:Class="Fakka.Pos.Components.StockItems.SelectedProductsList"
+             x:Name="page">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="LineItemTemplate">
+                <templates:StockItemLineTemplate 
+                    LineIncreasedCommand="{Binding IncreasedCommand, Source={x:Reference page}}" 
+                    LineDecreasedCommand="{Binding DecreasedCommand, Source={x:Reference page}}" />
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </ContentView.Resources>
+    
+    <ContentView.Content>
+        <StackLayout BindingContext="{x:Reference page}">
+            <StackLayout BackgroundColor="{StaticResource LightGreyColor}" Orientation="Horizontal">
+                <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="CenterAndExpand" Text="{resources:Translate Quantity}"/>
+                <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="CenterAndExpand" Text="{resources:Translate Product}"/>
+                <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="CenterAndExpand" Text="{resources:Translate Price}"/>
+            </StackLayout>
+
+            <CollectionView x:Name="ItemsList" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource LineItemTemplate}"/>
+
+            <Label Style="{StaticResource LargeBoldBlackLabel}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{resources:Translate TotalPrice}" />
+                        <Span Text=": "/>
+                        <Span Text="{Binding TotalPrice, Source={x:Reference page}, StringFormat='{0:N}'}"/>
+                        <Span Text=" " />
+                        <Span Text="{resources:Translate RS}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

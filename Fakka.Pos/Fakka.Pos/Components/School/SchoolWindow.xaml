@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:controls="clr-namespace:Fakka.Pos.Controls"
+             xmlns:resources="clr-namespace:Fakka.Pos.Resources"
+             mc:Ignorable="d"
+             x:Class="Fakka.Pos.Components.School.SchoolWindow"
+             x:Name="this">
+  <ContentView.Content>
+      <StackLayout BindingContext="{x:Reference this}">
+            <Frame BorderColor="Gray">
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="20" >
+                        <forms:CachedImage HeightRequest="60" WidthRequest="60" Source="{Binding SchoolLogo}" LoadingPlaceholder="school_icon" ErrorPlaceholder="school_icon">
+                            <forms:CachedImage.Transformations>
+                                <transformations:CircleTransformation></transformations:CircleTransformation>
+                            </forms:CachedImage.Transformations>
+                        </forms:CachedImage>
+                        <StackLayout>
+                            <Label  Style="{Binding DefaultBlackLabel}" Text="{Binding SchoolName}" />
+                            <Label Style="{StaticResource MicroBlackLabel}" Text="{Binding EducationalDepartmentName}" />
+                        </StackLayout>
+                    </StackLayout>
+
+                    <controls:CurvedButton
+                        Margin="20"
+                        WidthRequest="500"
+                        Style="{StaticResource DefaultPrimaryButton}"
+                        Text="{resources:Translate Logout}" 
+                        Command="{Binding LogoutButtonCommand}" />
+                </StackLayout>
+            </Frame>
+      </StackLayout>
+  </ContentView.Content>
+</ContentView>

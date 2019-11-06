@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:converters="clr-namespace:Fakka.Core.Converters;assembly=Fakka.Core"
+             mc:Ignorable="d"
+             x:Class="Fakka.Pos.Templates.MealTemplate">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:BytesToImageConverter x:Key="BytesToImageConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+  <ContentView.Content>
+        <Grid Margin="10,0">
+            <StackLayout>
+
+                <Frame x:Name="ImageContainer" VerticalOptions="StartAndExpand"  HasShadow="False" HorizontalOptions="Center" Padding="1" Grid.Row="0" >
+                    <ffimageloading:CachedImage x:Name="ItemImage" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="{Binding LocalImage, Converter={StaticResource BytesToImageConverter}}">
+                        <ffimageloading:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation/>
+                        </ffimageloading:CachedImage.Transformations>
+                    </ffimageloading:CachedImage>
+                </Frame>
+
+                <Frame x:Name="Footer" VerticalOptions="StartAndExpand" HorizontalOptions="Fill" Padding="1" HasShadow="False" Margin="0,0" CornerRadius="5">
+                    <Grid x:Name="FotterContainer" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Row="1" ColumnSpacing="0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Frame Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  HasShadow="False" IsClippedToBounds="True" Padding="1">
+                            <Frame.Content>
+                                <Label Style="{StaticResource StockItemLabel}" Text="{Binding Name}" />
+                            </Frame.Content>
+
+                            <!--Card selected trigger-->
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource ItemSelectionColor}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                        </Frame>
+
+
+                        <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HasShadow="False" Padding="1">
+                            <StackLayout BackgroundColor="White">
+                                <Label Style="{DynamicResource StockItemFooterLabel}" VerticalOptions="CenterAndExpand" Text="{Binding UnitPrice, StringFormat='{0:N}'}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="Style" Value="{StaticResource SelectedItemFooterLabel}" />
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="False">
+                                            <Setter Property="Style" Value="{StaticResource StockItemFooterLabel}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </StackLayout>
+
+                            <!--Card selected trigger-->
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource ItemSelectionColor}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                        </Frame>
+                    </Grid>
+
+                    <!--Card selected trigger-->
+                    <Frame.Triggers>
+                        <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="True">
+                            <Setter Property="BackgroundColor" Value="{StaticResource ItemSelectionColor}" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="False">
+                            <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
+                        </DataTrigger>
+                    </Frame.Triggers>
+                </Frame>
+
+            </StackLayout>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

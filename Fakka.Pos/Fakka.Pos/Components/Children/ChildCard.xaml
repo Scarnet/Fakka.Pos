@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:children="clr-namespace:Fakka.Pos.Components.Children"
+             xmlns:resources="clr-namespace:Fakka.Pos.Resources"
+             xmlns:templates="clr-namespace:Fakka.Pos.Templates"
+             mc:Ignorable="d"
+             x:Name="this"
+             x:Class="Fakka.Pos.Components.Children.ChildCard">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="BannedProductsTemplate">
+                <templates:BannedProductsTemplate />
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout BindingContext="{x:Reference this}" BackgroundColor="{StaticResource LightGreyColor}">
+            <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
+                <!--Child image-->
+                <children:ChildImage 
+                    Padding="5"
+                    HasImage="{Binding HasImage}" 
+                    ChildImageSource="{Binding ChildImage}" 
+                    ChildName="{Binding ChildName}" 
+                    ParentName="{Binding ParentName}"
+                    Radius="20"
+                    BorderColor="{StaticResource DefaultChildImageBackground}" 
+                    BorderWidth="3" />
+                
+                <StackLayout VerticalOptions="Center" Padding="12,0" Spacing="0">
+                    <!--Code number-->
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{resources:Translate CodeNumber}" />
+                                <Span Text=": "/>
+                                <Span Text="{Binding ChildCode}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <!--Name-->
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{resources:Translate Name}" />
+                                <Span Text=": "/>
+                                <Span Text="{Binding ChildName}" />
+                                <Span Text=" " />
+                                <Span Text="{Binding ParentName}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <!--Grade-->
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{resources:Translate Grade}" />
+                                <Span Text=": "/>
+                                <Span Text="{Binding GradeName}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+
+                <Frame x:Name="BannedSign" IsVisible="False" Margin="5" VerticalOptions="Start" HorizontalOptions="EndAndExpand" BackgroundColor="Red" Padding="0" HeightRequest="20" WidthRequest="20" CornerRadius="20">
+                    <Label Text="!"  VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" />
+                </Frame>
+            </StackLayout>
+
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <!--Current balance-->
+                <StackLayout  Margin="10, 10, 20, 10" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource WhiteColor}">
+                    <Label VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Text="{resources:Translate CurrentBalance}" />
+                    <Label VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Style="{StaticResource LargeOrangeLabel}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding CurrentBalance}" />
+                                <Span Text=" " />
+                                <Span Text="{resources:Translate Ryial}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+
+                <!--Daily limit-->
+                <StackLayout  Margin="20, 10, 10, 10" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource WhiteColor}">
+                    <Label VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Text="{resources:Translate DailyLimit}" />
+                    <Label VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Style="{StaticResource LargeOrangeLabel}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding DailyLimit}" />
+                                <Span Text=" " />
+                                <Span Text="{resources:Translate Ryial}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+            
+            <!--Banned products-->
+            <!--<StackLayout x:Name="BannedProductsContainer" IsVisible="True" Padding="0" Margin="5,-5" VerticalOptions="Start">
+                --><!--<Label Text="{resources:Translate BannedProductsList}" />--><!--
+                
+                <CollectionView x:Name="BannedProductsList" 
+                            VerticalOptions="End" 
+                            ItemsLayout="HorizontalList" 
+                            ItemTemplate="{StaticResource BannedProductsTemplate}" />
+            </StackLayout>-->
+        </StackLayout>
+
+    </ContentView.Content>
+</ContentView> 

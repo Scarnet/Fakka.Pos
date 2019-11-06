@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:Fakka.Pos.Resources"
+             xmlns:converters="clr-namespace:Fakka.Core.Converters;assembly=Fakka.Core"
+             mc:Ignorable="d"
+             x:Class="Fakka.Pos.Templates.StockItemLineTemplate"
+             x:Name="this">
+
+    <!--IsEnabled="{Binding IsOnlineOrder, Converter={StaticResource InverseBoolConverter}}"-->
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Spacing="10">
+                <Button Style="{StaticResource StepperButton}"
+                        HorizontalOptions="StartAndExpand" 
+                        VerticalOptions="CenterAndExpand" 
+                        Text="+" 
+                        Command="{Binding LineIncreasedCommand, Source={x:Reference this}}" CommandParameter="{Binding .}" />
+
+                <Label Style="{StaticResource LargeBoldBlackLabel}" Text="{Binding Quantity}" VerticalOptions="CenterAndExpand"/>
+
+                <Button 
+                    Style="{StaticResource StepperButton}" 
+                    HorizontalOptions="EndAndExpand" 
+                    VerticalOptions="CenterAndExpand" 
+                    Text="-" 
+                    Command="{Binding LineDecreasedCommand, Source={x:Reference this}}" CommandParameter="{Binding .}" />
+            </StackLayout>
+
+            <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" Margin="10" Text="{Binding Name}"/>
+
+            <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="Fill" VerticalOptions="Center" HorizontalTextAlignment="Center" BackgroundColor="Transparent" Margin="10" >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding TotalPrice, StringFormat='{0:N}'}" />
+                        <Span Text=" " />
+                        <Span Text="{resources:Translate RS}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

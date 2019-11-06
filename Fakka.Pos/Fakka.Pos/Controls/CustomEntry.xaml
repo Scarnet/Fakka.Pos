@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:converters="clr-namespace:Fakka.Core.Converters;assembly=Fakka.Core"
+             xmlns:renderers="clr-namespace:Fakka.Pos.Renderers"
+             x:Class="Fakka.Pos.Controls.CustomEntry">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <StackLayout x:Name="CustomEntryContainer" Padding="0" Spacing="0"
+          VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+
+        <renderers:EntryExtension x:Name="TextEntry" 
+               HorizontalOptions="FillAndExpand"
+               MaxLength="{Binding MaxLength}"
+               VerticalOptions="Start" TextChanged="TextEntry_OnTextChanged"
+               Text="{Binding ValidatableObject.Value, Mode=TwoWay}"
+               IsEnabled="{Binding IsEnabled}"
+               Focused="TextEntry_Focused"
+               Unfocused="TextEntry_Unfocused"
+               IsVisible="{Binding IsValidationOnly,Converter={StaticResource InverseBoolConverter}}">
+            <renderers:EntryExtension.Behaviors>
+                <behaviors:EventToCommandBehavior
+                    EventName="Unfocused"  
+                    Command="{Binding ValidationCommand}" />
+            </renderers:EntryExtension.Behaviors>
+        </renderers:EntryExtension>
+        <StackLayout  Orientation="Horizontal" HorizontalOptions="FillAndExpand"
+                      IsVisible="{Binding ValidatableObject.IsValid, Converter={StaticResource InverseBoolConverter}}">
+
+            <Label x:Name="ErrorLabel" Margin="4,0,4,0"
+               LineBreakMode="WordWrap" 
+               HorizontalOptions="StartAndExpand"
+               VerticalOptions="Center"
+               PropertyChanged="ErrorLabel_OnPropertyChanged"
+               Text="{Binding ValidatableObject.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+               Style="{StaticResource ErrorLabel}"
+               IsVisible="{Binding ValidatableObject.IsValid, Converter={StaticResource InverseBoolConverter}}"/>
+
+            <Image HorizontalOptions="End"
+                   VerticalOptions="Start"
+                   WidthRequest="20" HeightRequest="20"  
+                   Source="validation_icon.png"/>
+        </StackLayout>
+    </StackLayout>
+
+</ContentView>

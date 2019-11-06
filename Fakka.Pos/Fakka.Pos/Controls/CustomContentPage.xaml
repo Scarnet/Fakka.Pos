@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Fakka.Pos.Controls"
+             x:Class="Fakka.Pos.Controls.CustomContentPage">
+    <ContentView.Resources>
+        <!--<ResourceDictionary>
+            <converters:StringNullOrEmptyBoolConverter x:Key="StringNullOrEmptyBoolConverter"/>
+        </ResourceDictionary>-->
+    </ContentView.Resources>
+
+
+    <Grid FlowDirection="{Binding Rtl}" ColumnSpacing="0" RowSpacing="0">
+        <Grid.Triggers>
+            <DataTrigger TargetType="Grid" Binding="{Binding Rtl}" Value="0">
+                <Setter Property="FlowDirection" Value="LeftToRight" />
+            </DataTrigger>
+            <DataTrigger TargetType="Grid" Binding="{Binding Rtl}" Value="1">
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+            </DataTrigger>
+
+        </Grid.Triggers>
+
+        <Grid ColumnSpacing="0" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <!--<RowDefinition Height="Auto" />-->
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout x:Name="StatusBarView" Grid.Row="0" Grid.Column="0"  Spacing="0" HeightRequest="24" BackgroundColor="{StaticResource PrimaryColor}"/>
+                         
+            <Grid Grid.Row="1" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Image x:Name="Background"  Aspect="Fill"/>
+                <BoxView x:Name="BackgroundOverlay" />
+            </Grid>
+
+            <ContentView x:Name="ViewContainer"  Grid.Row="1" Grid.Column="0">
+                <!--< Your control design goes here >-->
+            </ContentView>
+            
+            <!--<This code is commented because Loading indicator became native>-->
+            <!--<StackLayout  Grid.Row="0" Grid.Column="0" 
+                          IsVisible="{Binding IsBusy}"
+                          BackgroundColor="#80000000"
+                          VerticalOptions="FillAndExpand"
+                          HorizontalOptions="FillAndExpand">
+                <StackLayout 
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand">
+                    <Frame CornerRadius="5"
+                           BorderColor="Transparent"
+                           BackgroundColor="#D0000000"
+                           Padding="20"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" >
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="FillAndExpand" >
+                            <ActivityIndicator IsRunning="{Binding IsBusy}" Color ="{StaticResource LoadingSpinnerColor}" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            --><!--<Label IsVisible="{Binding BusyMessage, Converter={StaticResource StringNullOrEmptyBoolConverter}}" Text="{Binding BusyMessage}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" TextColor="{StaticResource LoadingLabelColor}"/>--><!--
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </StackLayout>-->
+        </Grid>
+    </Grid>
+</ContentView>

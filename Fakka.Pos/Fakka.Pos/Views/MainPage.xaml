@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:Fakka.Pos.Components"
+             xmlns:controls="clr-namespace:Fakka.Pos.Controls"
+             xmlns:children="clr-namespace:Fakka.Pos.Components.Children"
+             xmlns:behaviours="clr-namespace:Fakka.Core.Behaviours;assembly=Fakka.Core"
+             xmlns:stockitems="clr-namespace:Fakka.Pos.Components.StockItems"
+             xmlns:resources="clr-namespace:Fakka.Pos.Resources"
+             xmlns:school="clr-namespace:Fakka.Pos.Components.School"
+             xmlns:templates="clr-namespace:Fakka.Pos.Templates"
+             xmlns:selectors="clr-namespace:Fakka.Pos.Templates.Selectors"
+             NavigationPage.HasNavigationBar="False"
+             Visual="Material"
+             mc:Ignorable="d"
+             x:Class="Fakka.Pos.Views.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="TodayOrdersTemplate">
+                <templates:OrdersTemplate />
+            </DataTemplate>
+
+            <DataTemplate x:Key="TodayOrderItemTemplate">
+                <templates:TodayOrderItemTemplate />
+            </DataTemplate>
+
+            <DataTemplate x:Key="EmptyOrderItemTemplate">
+                <StackLayout />
+            </DataTemplate>
+
+            <selectors:TodayOrdersTemplateSelector x:Key="TodaysOrdersSelector" 
+                                                   OrderTemplate="{StaticResource TodayOrdersTemplate}" 
+                                                   OrderItemTemplate="{StaticResource TodayOrderItemTemplate}" 
+                                                   EmptyTemplate="{StaticResource EmptyOrderItemTemplate}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <controls:CustomContentPage>
+            <controls:CustomContentPage.ContentView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="17*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="12*" />
+                        <ColumnDefinition Width="8*" />
+                    </Grid.ColumnDefinitions>
+
+                    <components:SearchHeader Grid.Row="0" 
+                                             Grid.Column="0" 
+                                             Grid.ColumnSpan="2" 
+                                             Grades="{Binding Grades}" 
+                                             SearchChildren="{Binding SearchChildren}" 
+                                             BluetoothChildren="{Binding BluetoothChildren}"
+                                             GradeDisplay="Name"
+                                             SearchName="{Binding SearchName}"
+                                             SearchCode="{Binding SearchCode}"
+                                             SelectedGrade="{Binding SelectedGrade}"
+                                             SchoolLogo="{Binding SchoolLogo}"
+                                             SchoolName="{Binding SchoolName}"
+                                             BluetoothActive="{Binding BluetoothActive}"
+                                             SchoolLogoTapped="SearchHeader_SchoolLogoTapped"
+                                             Searching="{Binding Searching}"
+                                             BluetoothTappedCommand="{Binding BluetoothActivationCommand}"
+                                             SearchNameChangedCommand="{Binding NameChangedCommand}"
+                                             SearchCodeChangedCommand="{Binding CodeChangedCommand}"
+                                             SearchNameValidationCommand="{Binding NameValidationCommand}"
+                                             SearchCodeValidationCommand="{Binding CodeValidationCommand}">
+
+                        <components:SearchHeader.Behaviors>
+                            <behaviours:EventToCommnadBehaviour EventName="ChildSelected" Command="{Binding ChildSelectedCommand}"/>
+                        </components:SearchHeader.Behaviors>
+                    </components:SearchHeader>
+
+                    <Grid Grid.Row="1" Grid.Column="0" Margin="5" RowSpacing="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="18*" />
+                        </Grid.RowDefinitions>
+                        
+                        <StackLayout Grid.Row="0" Spacing="30" Orientation="Horizontal">
+                            <controls:CurvedButton Style="{StaticResource SwitcherButton}" HorizontalOptions="FillAndExpand" Margin="10,0" Text="{resources:Translate FullPos}" Clicked="FullPos_Clicked" />
+                            <controls:CurvedButton Style="{StaticResource SwitcherButton}" HorizontalOptions="FillAndExpand" Margin="10,0" Text="{Binding TotalOnlineOrders, StringFormat={resources:Translate TodaysOrders}}" Clicked="TodaysOrders_Clicked" />
+                        </StackLayout>
+
+
+                        <CollectionView x:Name="TodaysOrderList" IsVisible="False" Grid.Row="1" ItemsSource="{Binding TodayOnlineOrders}" SelectionChanged="TodaysOrderList_SelectionChanged"
+                                        ItemTemplate="{StaticResource TodaysOrdersSelector}" SelectedItem="{Binding SelectedTodayOrder}" SelectionMode="Single">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="2"/>
+                            </CollectionView.ItemsLayout>
+                        </CollectionView>
+                        <components:StockItemRepeater x:Name="StockItemsList" Grid.Row="1" Items="{Binding StockItems}">
+                            <components:StockItemRepeater.Behaviors>
+                                <behaviours:EventToCommnadBehaviour EventName="Selected" Command="{Binding StockItemSelected}" />
+                            </components:StockItemRepeater.Behaviors>
+                        </components:StockItemRepeater>
+                    </Grid>
+
+                    <AbsoluteLayout Grid.Row="1" Grid.Column="1" Margin="0, 5">
+
+                        <!--Selected student and product list-->
+                        <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Margin="0" Padding="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*" />
+                                <RowDefinition Height="12*" />
+                                <RowDefinition Height="3*" />
+                            </Grid.RowDefinitions>
+
+                            <children:ChildCard Grid.Row="0" Child="{Binding SelectedChild}" />
+                            <stockitems:SelectedProductsList Grid.Row="1" Padding="0, 10" Items="{Binding TransactionItems}"
+                                                         TotalPrice="{Binding TotalPrice}"
+                                                         IncreasedCommand="{Binding LineItemsIncreasedCommand}" 
+                                                         DecreasedCommand="{Binding LineItemsDecreasedCommand}"/>
+                            <Grid Grid.Row="2" Margin="10,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Button Style="{StaticResource TransactionButton}" Grid.Column="0" Text="{resources:Translate MakeTransaction}" Command="{Binding TransactionCommand}" IsEnabled="{Binding BalanceTransactionAllowed}" />
+                                <Button Style="{StaticResource TransactionButton}" Grid.Column="1" Text="{resources:Translate CashPayment}" Command="{Binding CashTransactionCommand}" IsEnabled="{Binding CashTransactionAllowed}"/>
+                                <Button Style="{StaticResource CancelButton}" Grid.Column="2" Text="{resources:Translate Cancel}" Command="{Binding CancelCommand}" />
+                            </Grid>
+                        </Grid>
+
+                        <!--School info window-->
+                        <school:SchoolWindow x:Name="SchoolWindnow" 
+                                             AbsoluteLayout.LayoutFlags="All" 
+                                             AbsoluteLayout.LayoutBounds="1,0,0.8,1" 
+                                             IsVisible="False" 
+                                             SchoolName="{Binding SchoolName}"
+                                             EducationalDepartmentName="{Binding EducationalDepartmentName}"
+                                             SchoolLogo="{Binding SchoolLogo}"
+                                             LogoutButtonCommand="{Binding LogoutCommand}"/>
+
+                    </AbsoluteLayout>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PageTapped_Tapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+            </controls:CustomContentPage.ContentView>
+        </controls:CustomContentPage>
+    </ContentPage.Content>
+</ContentPage>

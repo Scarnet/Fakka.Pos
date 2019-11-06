@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:Fakka.Pos.Components"
+             xmlns:stockitems="clr-namespace:Fakka.Pos.Components.StockItems"
+             xmlns:selectors="clr-namespace:Fakka.Pos.Templates.Selectors"
+             xmlns:converters="clr-namespace:Fakka.Core.Converters;assembly=Fakka.Core"
+             xmlns:templates="clr-namespace:Fakka.Pos.Templates"
+             xmlns:controls="clr-namespace:Fakka.Pos.Controls"
+             mc:Ignorable="d"
+             x:Name="this"
+             x:Class="Fakka.Pos.Components.StockItemRepeater">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+
+            <converters:BytesToImageConverter x:Key="BytesToImageConverter" />
+
+            <DataTemplate x:Key="ProductsTemplate">
+                <templates:StockItemTemplate ImageRadius="62"/>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="MealsTemplate">
+                <templates:MealTemplate ImageRadius="62" />
+            </DataTemplate>
+
+            <selectors:StockItemTemplateSelector x:Key="TemplateSelector" ProductTemplate="{StaticResource ProductsTemplate}" MealTemplate="{StaticResource MealsTemplate}"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <controls:CustomContentPage>
+            <StackLayout>
+                <CollectionView x:Name="ItemsList" ItemsSource="{Binding Items, Source={x:Reference this}}" ItemTemplate="{StaticResource TemplateSelector}" SelectionMode="Single" SelectionChanged="ItemsList_SelectionChanged">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="7" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </StackLayout>
+        </controls:CustomContentPage>
+    </ContentView.Content>
+</ContentView>

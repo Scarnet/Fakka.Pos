@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Default Colors-->
+  <color name="color_primary">#188776</color>
+  <color name="color_accent">#188776</color>
+  <color name="hijri_date_picker_accent_color">#188776</color>
+
+
+</resources>

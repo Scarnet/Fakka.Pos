@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Fakka.Pos.Controls"
+             xmlns:resources="clr-namespace:Fakka.Pos.Resources"
+             xmlns:converters="clr-namespace:Fakka.Core.Converters;assembly=Fakka.Core"
+             xmlns:templates="clr-namespace:Fakka.Pos.Templates"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             mc:Ignorable="d"
+             x:Name="this"
+             x:Class="Fakka.Pos.Components.SearchHeader">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"></converters:InverseBoolConverter>
+
+            <DataTemplate x:Key="ChildTemplate">
+                <templates:ChildPictureTemplate></templates:ChildPictureTemplate>
+            </DataTemplate>
+        </ResourceDictionary>
+
+        <Style x:Key="SearchButtonStyle" TargetType="Frame">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HeightRequest" Value="60" />
+            <Setter Property="WidthRequest" Value="60"/>
+            <Setter Property="CornerRadius" Value="60"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource WhiteColor}"/>
+        </Style>
+
+        <Style x:Key="SearchIconStyle" TargetType="Image">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+        </Style>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid Style="{StaticResource PageHeaderBackground}" BindingContext="{x:Reference this}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="11*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            
+            <!--Search Button-->
+            <Grid IsVisible="{Binding Searching, Converter={StaticResource InverseBoolConverter}}" Grid.Column="0">
+                <Frame Style="{StaticResource SearchButtonStyle}" IsVisible="{Binding SearchWithName}">
+                    <Image Style="{StaticResource SearchIconStyle}" Source="search">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SearchNameChangedCommand}" Tapped="NameEntry_Completed" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Frame>
+
+                <Frame Style="{StaticResource SearchButtonStyle}" IsVisible="{Binding SearchWithName, Converter={StaticResource InverseBoolConverter}}">
+                    <Image Style="{StaticResource SearchIconStyle}" Source="search">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SearchCodeChangedCommand}" Tapped="CodeEntry_Completed" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Frame>
+            </Grid>
+
+
+            <!-- Search controls -->
+            <Grid Grid.Column="1" Margin="10,5,10,0" VerticalOptions="Start" IsVisible="{Binding Searching, Converter={StaticResource InverseBoolConverter}}">
+
+                <controls:CustomEntry x:Name="NameEntry"
+                                      Padding="0"
+                                      Margin="0,-5,0,0"
+                                      VerticalOptions="Start"
+                                      ImageAlignment="Right"
+                                      EntryStyle="{StaticResource PageHeaderEntry}"
+                                      IsVisible="{Binding SearchWithName}"
+                                      Placeholder="{resources:Translate SearchWithName}"/>
+
+                <controls:CustomEntry x:Name="CodeEntry"
+                                      VerticalOptions="Start"
+                                      Margin="0,-5,0,0"
+
+                                      Padding="0"
+                                      ImageAlignment="Right"
+                                      EntryStyle="{StaticResource PageHeaderEntry}"
+                                      IsVisible="{Binding SearchWithName, Converter={StaticResource InverseBoolConverter}}"
+                                      Placeholder="{resources:Translate SearchWithCode}" />
+                <Label Margin="0,35,0,0" 
+                       IsVisible="{Binding SearchWithName}"
+                       HorizontalOptions="Start" 
+                       VerticalOptions="Center" 
+                       Style="{StaticResource PageHeaderLabel}" 
+                       Text="{resources:Translate OrSearchWithCode}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="HandleSearchMethodLabelTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label Margin="0,35,0,0" 
+                       IsVisible="{Binding SearchWithName, Converter={StaticResource InverseBoolConverter}}"
+                       HorizontalOptions="Start" 
+                       VerticalOptions="Center" 
+                       Style="{StaticResource PageHeaderLabel}" 
+                       Text="{resources:Translate OrSearchWithName}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="HandleSearchMethodLabelTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </Grid>
+
+            <Grid x:Name="GradesPickerContainer" IsVisible="{Binding Searching, Converter={StaticResource InverseBoolConverter}}" Grid.Column="2" VerticalOptions="Center">
+
+                <controls:ExtendedPicker x:Name="GradesPicker"  
+                                     VerticalOptions="Fill"
+                                     HorizontalOptions="Fill"
+                                     IsVisible="{Binding SearchWithName}"
+                                     TextColor="{StaticResource WhiteColor}" 
+                                     TitleColor="{StaticResource WhiteColor}"  
+                                     UnderlineColor="{StaticResource WhiteColor}"
+                                     Title="{resources:Translate Grade}"
+                                     SelectedItem="{Binding SelectedGrade}" />
+            </Grid>
+
+
+            <!--Search results-->
+            <StackLayout x:Name="SearchResultsContainer" IsVisible="{Binding Searching}" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal" Margin="0,0,10,0" VerticalOptions="Center">
+                <Frame VerticalOptions="Center" HorizontalOptions="Start" HeightRequest="60" WidthRequest="60" Padding="0" CornerRadius="60" Margin="10,0" BorderColor="{StaticResource PrimaryColor}" BackgroundColor="{StaticResource WhiteColor}">
+                    <Label Text="X" TextColor="{StaticResource PrimaryColor}" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="CloseLabel_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Frame>
+
+                <Grid>
+                    <CollectionView x:Name="ChildrenList" 
+                                VerticalOptions="Center"
+                                SelectionMode="Single"
+                                ItemsSource="{Binding SearchChildren}" 
+                                ItemTemplate="{StaticResource ChildTemplate}" 
+                                ItemsLayout="HorizontalList"
+                                SelectionChanged="ChildrenList_SelectionChanged" />
+
+                    <Label x:Name="SearchChildrenEmptyView" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center" 
+                           HorizontalOptions="FillAndExpand" 
+                           TextColor="{StaticResource WhiteColor}" 
+                           Text="{resources:Translate NoChildrenFoundSearching}" />
+
+                </Grid>
+            </StackLayout>
+
+            <!--Bluetooth icon-->
+            <Image Grid.Column="3" IsVisible="{Binding Searching, Converter={StaticResource InverseBoolConverter}}" Aspect="AspectFit">
+                <Image.Triggers>
+                    <DataTrigger TargetType="Image" Binding="{Binding BluetoothActive}" Value="False">
+                        <Setter Property="Source" Value="inactive_bluetooth" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Image" Binding="{Binding BluetoothActive}" Value="True">
+                        <Setter Property="Source" Value="active_bluetooth" />
+                    </DataTrigger>
+                </Image.Triggers>
+
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BluetoothTappedCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <!--Children Bluetooth list-->
+            <Grid  IsVisible="{Binding Searching, Converter={StaticResource InverseBoolConverter}}"
+                   Grid.Column="4" 
+                   VerticalOptions="Center">
+
+                <CollectionView x:Name="BluetoothChildrenList" 
+                            SelectionMode="Single"
+                            ItemTemplate="{StaticResource ChildTemplate}" 
+                            ItemsLayout="HorizontalList"
+                            SelectionChanged="ChildrenList_SelectionChanged" />
+
+                <Label x:Name="BlChildrenEmptyStateView"
+                       IsVisible="False" 
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="CenterAndExpand" 
+                       TextColor="{StaticResource WhiteColor}" 
+                       Text="{resources:Translate NoConnectedBluetooth}" />
+
+            </Grid>
+
+
+            <!--School logo-->
+            <StackLayout Grid.Column="5" Margin="20,0" BackgroundColor="White">
+                <ffimageloading:CachedImage  VerticalOptions="CenterAndExpand" WidthRequest="50" HeightRequest="50" 
+                                            Source="{Binding SchoolLogo}" LoadingPlaceholder="school_icon" ErrorPlaceholder="school_icon">
+                    <ffimageloading:CachedImage.Transformations>
+                        <fftransformations:CircleTransformation />
+                    </ffimageloading:CachedImage.Transformations>
+                </ffimageloading:CachedImage>
+
+                <Label Style="{StaticResource MicroBoldBlackLabel}" VerticalOptions="Center" Margin="0,0,0,15" HorizontalOptions="Center" Text="{Binding SchoolName}" />
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="SchoolLogo_Tapped" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
