@@ -41,7 +41,7 @@ namespace Fakka.Pos.ViewModels
     {
         #region Private fields
         private IBluetoothHandler bluetoothHandler;
-        private List<ChildProfile> _childrenProfiles = new List<ChildProfile>();
+        private List<ChildProfile> childrenProfiles = new List<ChildProfile>();
         private School school;
         private UserSession userSession;
         private List<OnlineOrder> onlineOrders = new List<OnlineOrder>();
@@ -295,7 +295,7 @@ namespace Fakka.Pos.ViewModels
             (name) =>
             {
                 _searchName.Value = _searchName.Value?.Trim() ?? string.Empty;
-                SearchChildren = new ObservableCollection<ChildProfile>(_childrenProfiles.Where(profile =>
+                SearchChildren = new ObservableCollection<ChildProfile>(childrenProfiles.Where(profile =>
                (profile.Name.ToLower().Contains(_searchName.Value.ToLower())
                 || profile.ParentName.ToLower().Contains(_searchName.Value.ToLower())) && profile.GradeId.ToLower() == _selectedGrade.Id.ToLower())
                     .ToList());
@@ -323,7 +323,7 @@ namespace Fakka.Pos.ViewModels
             {
                 Searching = true;
                 _searchCode.Value = _searchCode.Value?.Trim() ?? string.Empty;
-                SearchChildren = new ObservableCollection<ChildProfile>(_childrenProfiles.Where(profile =>
+                SearchChildren = new ObservableCollection<ChildProfile>(childrenProfiles.Where(profile =>
                 profile.Code.ToString() == _searchCode.Value.ToLower())
                 .ToList());
 
@@ -519,7 +519,7 @@ namespace Fakka.Pos.ViewModels
         private async Task LoadChildrenData()
         {
             var childrenResponse = await DataContext.Get<IOdataContext>().GetChildrenDetails();
-            _childrenProfiles = childrenResponse.Data.Value;
+            childrenProfiles = childrenResponse.Data.Value;
         }
         private async Task LoadGradesData()
         {
@@ -609,55 +609,19 @@ namespace Fakka.Pos.ViewModels
 
 
 
-            //Clear all expanded items
-            List<BaseUiModel> orders = TodayOnlineOrders.ToList();
-            TodayOnlineOrders.RemoveRange(trans => trans is OrderTransaction);
             var order = (TodayOnlineOrder)SelectedTodayOrder;
 
             if (previouslySelectedOrder == order)
             {
                 this.previouslySelectedOrder = null;
+                ClearAll();
                 return;
             }
 
             this.previouslySelectedOrder = order;
-
-
+            var orderChild = this.childrenProfiles.FirstOrDefault(child => child.Id.ToLower() == order.ChildId.ToLower());
+            ChildSelectedCommand.Execute(orderChild);
             order.IsSelected = true;
-            int itemsCount = order.OrderItems.Count;
-            int orderIndex = TodayOnlineOrders.IndexOf(order);
-            bool lastOrder = orderIndex == TodayOnlineOrders.Count - 1;
-
-            //We add this displacment to make up for the fact that we can't have empty items in a list and we need the order items to always be a raw under
-
-            if (orderIndex % 2 == 0 && itemsCount % 2 != 0 && !lastOrder)
-            {
-                int cellItemDisplacment = orderIndex + 2;
-                TodayOnlineOrders.Insert(cellItemDisplacment, new OrderTransaction());
-            }
-            else if (orderIndex % 2 != 0 && itemsCount % 2 != 0 || orderIndex % 2 == 0 && lastOrder)
-            {
-                int postCellDisplacment = orderIndex + 1;
-                TodayOnlineOrders.Insert(postCellDisplacment, new OrderTransaction());
-            }
-
-
-
-
-
-
-            for (int i = 0; i < itemsCount; i++)
-            {
-                var orderItem = Mapper.Map<OrderTransaction>(order.OrderItems[i]);
-                var stockiItem = StockItems.FirstOrDefault(item => new Guid(item.Id) == orderItem.ItemId);
-                orderItem.Image = stockiItem?.Image;
-
-                if (orderIndex % 2 != 0)
-                    TodayOnlineOrders.Insert(orderIndex + 1, orderItem);
-                else
-                    TodayOnlineOrders.Insert(orderIndex + 2, orderItem);
-
-            }
 
         }
 
@@ -699,7 +663,7 @@ namespace Fakka.Pos.ViewModels
                         macAddress = e.Device.Id.ToString().Replace("-", "");
                     }
 
-                    var child = this._childrenProfiles.FirstOrDefault(c => c.DeviceMacAddress?.ToLower() == macAddress);
+                    var child = this.childrenProfiles.FirstOrDefault(c => c.DeviceMacAddress?.ToLower() == macAddress);
 
                     if (child == null)
                         return;

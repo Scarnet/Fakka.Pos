@@ -20,7 +20,7 @@
         <StackLayout Spacing="10" Margin="40, 5, 0, 5" Padding="20" BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorBackgroundConverter}}">
             <StackLayout Orientation="Horizontal">
                 <Label Style="{StaticResource DefaultBoldBlackLabel}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Text="{Binding Name}" />
-                <Label Style="{StaticResource DefaultOrangeLabel}" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" TextColor="{Binding IsSelected, Converter={StaticResource BoolToColorTextConverter}}">
+                <Label Style="{StaticResource DefaultOrangeLabel}" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" TextColor="{Binding IsSelected, Converter={StaticResource BoolToColorTextConverter}}">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{Binding Total, StringFormat='{0:N}'}" />
@@ -29,9 +29,6 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-
-                <Label VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Text="{Binding HijriDurationFrom}"/>
-                <Label VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Text="{Binding HijriDurationTo}"/>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="10">
@@ -48,11 +45,11 @@
                             <Span Text="{Binding ChildName}" />
                             <Span Text=" " />
                             <Span Text="{Binding ParentName}" />
+                            <Span Text=" " />
+                            <Span Text="{Binding ChildCode, StringFormat='({0})'}"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-
-                <Label Style="{StaticResource SmallBoldBlackLabel}" Text="{Binding ChildCode}" />
             </StackLayout>
         </StackLayout>
     </ContentView.Content>
