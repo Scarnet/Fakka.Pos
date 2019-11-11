@@ -83,15 +83,53 @@
                         </Grid.RowDefinitions>
                         
                         <StackLayout Grid.Row="0" Spacing="30" Orientation="Horizontal">
-                            <controls:CurvedButton Style="{StaticResource SwitcherButton}" HorizontalOptions="FillAndExpand" Margin="10,0" Text="{resources:Translate FullPos}" Clicked="FullPos_Clicked" />
-                            <controls:CurvedButton Style="{StaticResource SwitcherButton}" HorizontalOptions="FillAndExpand" Margin="10,0" Text="{Binding TotalOnlineOrders, StringFormat={resources:Translate TodaysOrders}}" Clicked="TodaysOrders_Clicked" />
+
+                            <controls:CurvedButton Style="{StaticResource SwitcherButton}"
+                                                   HorizontalOptions="FillAndExpand" 
+                                                   Margin="10,0" 
+                                                   BorderWidth="2"
+                                                   BorderColor="{StaticResource PrimaryColor}"
+                                                   Text="{resources:Translate FullPos}" 
+                                                   Clicked="FullPos_Clicked">
+                                <controls:CurvedButton.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsVisible, Source={x:Reference StockItemsList} }" Value="False">
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+                                    </DataTrigger>
+
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsVisible, Source={x:Reference StockItemsList} }" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                                        <Setter Property="TextColor" Value="White" />
+                                    </DataTrigger>
+                                </controls:CurvedButton.Triggers>
+                            </controls:CurvedButton>
+
+                            <controls:CurvedButton Style="{StaticResource SwitcherButton}" 
+                                                   HorizontalOptions="FillAndExpand" 
+                                                   Margin="10,0" 
+                                                   BorderWidth="2"
+                                                   BorderColor="{StaticResource PrimaryColor}"
+                                                   Text="{Binding TotalOnlineOrders, StringFormat={resources:Translate TodaysOrders}}" 
+                                                   Clicked="TodaysOrders_Clicked">
+                                <controls:CurvedButton.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsVisible, Source={x:Reference TodaysOrderList} }" Value="False">
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+                                    </DataTrigger>
+
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsVisible, Source={x:Reference TodaysOrderList} }" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                                        <Setter Property="TextColor" Value="White" />
+                                    </DataTrigger>
+                                </controls:CurvedButton.Triggers>
+                            </controls:CurvedButton>
                         </StackLayout>
 
 
                         <CollectionView x:Name="TodaysOrderList" IsVisible="False" Grid.Row="1" ItemsSource="{Binding TodayOnlineOrders}" SelectionChanged="TodaysOrderList_SelectionChanged"
                                         ItemTemplate="{StaticResource TodaysOrdersSelector}" SelectedItem="{Binding SelectedTodayOrder}" SelectionMode="Single">
                             <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" Span="2"/>
+                                <GridItemsLayout Orientation="Vertical" Span="3"/>
                             </CollectionView.ItemsLayout>
                         </CollectionView>
                         <components:StockItemRepeater x:Name="StockItemsList" Grid.Row="1" Items="{Binding StockItems}">

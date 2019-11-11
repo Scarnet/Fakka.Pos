@@ -21,13 +21,15 @@
             </DataTemplate>
         </ResourceDictionary>
 
-        <Style x:Key="SearchButtonStyle" TargetType="Frame">
+        <Style x:Key="SearchButtonStyle" TargetType="ImageButton">
             <Setter Property="VerticalOptions" Value="Center" />
             <Setter Property="HorizontalOptions" Value="Center"/>
             <Setter Property="Padding" Value="0" />
-            <Setter Property="HeightRequest" Value="60" />
-            <Setter Property="WidthRequest" Value="60"/>
-            <Setter Property="CornerRadius" Value="60"/>
+            <Setter Property="HeightRequest" Value="20" />
+            <Setter Property="WidthRequest" Value="20"/>
+            <Setter Property="CornerRadius" Value="50"/>
+            <Setter Property="BorderColor" Value="White" />
+            <Setter Property="BorderWidth" Value="30" />
             <Setter Property="BackgroundColor" Value="{StaticResource WhiteColor}"/>
         </Style>
 
@@ -50,21 +52,10 @@
             
             <!--Search Button-->
             <Grid IsVisible="{Binding Searching, Converter={StaticResource InverseBoolConverter}}" Grid.Column="0">
-                <Frame Style="{StaticResource SearchButtonStyle}" IsVisible="{Binding SearchWithName}">
-                    <Image Style="{StaticResource SearchIconStyle}" Source="search">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SearchNameChangedCommand}" Tapped="NameEntry_Completed" />
-                        </Image.GestureRecognizers>
-                    </Image>
-                </Frame>
+                <ImageButton Style="{StaticResource SearchButtonStyle}"  IsVisible="{Binding SearchWithName}" Source="search" Command="{Binding SearchNameChangedCommand}" Clicked="NameEntry_Completed" />
 
-                <Frame Style="{StaticResource SearchButtonStyle}" IsVisible="{Binding SearchWithName, Converter={StaticResource InverseBoolConverter}}">
-                    <Image Style="{StaticResource SearchIconStyle}" Source="search">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SearchCodeChangedCommand}" Tapped="CodeEntry_Completed" />
-                        </Image.GestureRecognizers>
-                    </Image>
-                </Frame>
+                <ImageButton Style="{StaticResource SearchButtonStyle}" IsVisible="{Binding SearchWithName, Converter={StaticResource InverseBoolConverter}}" Source="search" Command="{Binding SearchCodeChangedCommand}" 
+                             Clicked="CodeEntry_Completed" />
             </Grid>
 
 
@@ -129,13 +120,10 @@
 
             <!--Search results-->
             <StackLayout x:Name="SearchResultsContainer" IsVisible="{Binding Searching}" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal" Margin="0,0,10,0" VerticalOptions="Center">
-                <Frame VerticalOptions="Center" HorizontalOptions="Start" HeightRequest="60" WidthRequest="60" Padding="0" CornerRadius="60" Margin="10,0" BorderColor="{StaticResource PrimaryColor}" BackgroundColor="{StaticResource WhiteColor}">
-                    <Label Text="X" TextColor="{StaticResource PrimaryColor}" VerticalOptions="Center" HorizontalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="CloseLabel_Tapped" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                </Frame>
+
+                <Button VerticalOptions="Center" HorizontalOptions="Start" HeightRequest="40" WidthRequest="40" Padding="0" CornerRadius="50" Margin="10,0" 
+                        BorderColor="{StaticResource PrimaryColor}" BackgroundColor="{StaticResource WhiteColor}" TextColor="{StaticResource PrimaryColor}" Text="X" Clicked="CloseLabel_Tapped" />
+
 
                 <Grid>
                     <CollectionView x:Name="ChildrenList" 
@@ -156,7 +144,7 @@
             </StackLayout>
 
             <!--Bluetooth icon-->
-            <Image Grid.Column="3" IsVisible="{Binding Searching, Converter={StaticResource InverseBoolConverter}}" Aspect="AspectFit">
+            <Image Grid.Column="3" IsVisible="{Binding Searching, Converter={StaticResource InverseBoolConverter}}" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="50" WidthRequest="50" Aspect="AspectFit">
                 <Image.Triggers>
                     <DataTrigger TargetType="Image" Binding="{Binding BluetoothActive}" Value="False">
                         <Setter Property="Source" Value="inactive_bluetooth" />

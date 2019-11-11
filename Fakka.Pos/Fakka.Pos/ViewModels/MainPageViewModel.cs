@@ -213,47 +213,14 @@ namespace Fakka.Pos.ViewModels
             if (child == null)
                 SelectedChild = null;
 
-            SelectedChild = (ChildProfile)child;
+            if (this.previouslySelectedOrder != null)
+                this.previouslySelectedOrder.IsSelected = false;
 
-            //reset banned products
-            foreach (var product in this.bannedProducts)
-                product.IsBanned = false;
+            this.previouslySelectedOrder = null;
 
-            bannedProducts?.Clear();
+            var selectedChild = (ChildProfile)child;
 
-            if (SelectedChild.BannedProducts != null)
-                foreach (var product in SelectedChild.BannedProducts)
-                {
-                    var bannedProduct = StockItems.FirstOrDefault(prod => prod.Id.ToLower() == product.Id.ToLower());
-                    if (bannedProduct == null)
-                        continue;
-
-                    bannedProduct.IsBanned = true;
-                    this.bannedProducts.Add(bannedProduct);
-                }
-
-            if (TransactionItems != null) //clear previously selected items
-
-                foreach (var item in TransactionItems)
-                {
-                    var stockItem = StockItems.First(i => i.Id.ToLower() == item.Id.ToLower());
-                    stockItem.IsSelected = false;
-                }
-
-
-            TransactionItems.Clear();
-
-
-
-            //If the child has an online order set the transaction items to items in the order
-            if (HasOnlineOrder)
-            {
-                var order = this.onlineOrders.First(o => o.ChildId.ToString().ToLower() == SelectedChild.Id);
-                var lineItems = Mapper.Map<IList<TransactionItem>, IList<OnlineOrderLineItem>>(order.OrderItems);
-                TransactionItems?.Clear();
-                TransactionItems.AddRange(lineItems);
-            }
-
+            SetSelectedChild(selectedChild);
         });
 
         public DelegateCommand<object> StockItemSelected => new BaseCommandHandler<object>(this, (obj) =>
@@ -551,8 +518,8 @@ namespace Fakka.Pos.ViewModels
 
             Task.Run(async () =>
             {
-                
-                    foreach (var item in itemsResponse.Data.Value)
+
+                foreach (var item in itemsResponse.Data.Value)
                     try
                     {
                         item.LocalImage = await CacheMedia(item.Image, $"{item.GetType().Name}_{item.Id}");
@@ -563,7 +530,7 @@ namespace Fakka.Pos.ViewModels
                         Crashes.TrackError(ex);
                     }
 
-                }, CancellationToken.None);
+            }, CancellationToken.None);
         }
         private async Task UpdateStockQuantity()
         {
@@ -620,7 +587,7 @@ namespace Fakka.Pos.ViewModels
 
             this.previouslySelectedOrder = order;
             var orderChild = this.childrenProfiles.FirstOrDefault(child => child.Id.ToLower() == order.ChildId.ToLower());
-            ChildSelectedCommand.Execute(orderChild);
+            SetSelectedChild(orderChild);
             order.IsSelected = true;
 
         }
@@ -681,6 +648,50 @@ namespace Fakka.Pos.ViewModels
                 Debug.WriteLine(ex);
             }
         }
+
+        private void SetSelectedChild(ChildProfile child)
+        {
+            SelectedChild = child;
+            //reset banned products
+            foreach (var product in this.bannedProducts)
+                product.IsBanned = false;
+
+            bannedProducts?.Clear();
+
+            if (SelectedChild.BannedProducts != null)
+                foreach (var product in SelectedChild.BannedProducts)
+                {
+                    var bannedProduct = StockItems.FirstOrDefault(prod => prod.Id.ToLower() == product.Id.ToLower());
+                    if (bannedProduct == null)
+                        continue;
+
+                    bannedProduct.IsBanned = true;
+                    this.bannedProducts.Add(bannedProduct);
+                }
+
+            if (TransactionItems != null) //clear previously selected items
+
+                foreach (var item in TransactionItems)
+                {
+                    var stockItem = StockItems.First(i => i.Id.ToLower() == item.Id.ToLower());
+                    stockItem.IsSelected = false;
+                }
+
+
+            TransactionItems.Clear();
+
+
+
+            //If the child has an online order set the transaction items to items in the order
+            if (HasOnlineOrder)
+            {
+                var order = this.onlineOrders.First(o => o.ChildId.ToString().ToLower() == SelectedChild.Id);
+                var lineItems = Mapper.Map<IList<TransactionItem>, IList<OnlineOrderLineItem>>(order.OrderItems);
+                TransactionItems?.Clear();
+                TransactionItems.AddRange(lineItems);
+            }
+
+        }
         private void ClearAll()
         {
             if (bannedProducts != null)
@@ -707,6 +718,11 @@ namespace Fakka.Pos.ViewModels
 
             if (SelectedGrade != null)
                 SelectedGrade = null;
+
+            if (this.previouslySelectedOrder != null)
+                this.previouslySelectedOrder.IsSelected = false;
+
+            this.previouslySelectedOrder = null;
         }
 
     }

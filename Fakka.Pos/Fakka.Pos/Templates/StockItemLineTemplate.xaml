@@ -37,7 +37,7 @@
 
             <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" Margin="10" Text="{Binding Name}"/>
 
-            <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="Fill" VerticalOptions="Center" HorizontalTextAlignment="Center" BackgroundColor="Transparent" Margin="10" >
+            <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Center" BackgroundColor="Transparent" Margin="10" >
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="{Binding TotalPrice, StringFormat='{0:N}'}" />

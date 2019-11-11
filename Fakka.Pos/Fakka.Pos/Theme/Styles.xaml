@@ -436,8 +436,15 @@
         <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
     </Style>
 
+    <Style x:Key="MicroOrangeLabel" TargetType="Label" BasedOn="{StaticResource DefaultOrangeLabel}">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMicro}" />
+    </Style>
     <Style x:Key="LargeOrangeLabel" TargetType="Label" BasedOn="{StaticResource DefaultOrangeLabel}">
         <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+    </Style>
+
+    <Style x:Key="SmallOrangeLabel" TargetType="Label" BasedOn="{StaticResource DefaultOrangeLabel}">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}"/>
     </Style>
 
 

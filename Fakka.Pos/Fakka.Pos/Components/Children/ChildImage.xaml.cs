@@ -27,7 +27,9 @@ namespace Fakka.Pos.Components.Children
         public static BindableProperty HasImageProperty = BindableProperty.Create(nameof(HasImage), typeof(bool), typeof(ChildImage), true, propertyChanged: HandleHasImageChanged);
 
 
-        public static BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSizeProperty), typeof(string), typeof(ChildImage), "Large", propertyChanged: HandleFontSizeChanged);
+        public static BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(string), typeof(ChildImage), "Large", propertyChanged: HandleFontSizeChanged);
+        public static BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(ChildImage), Color.Orange);
+        public static BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(ChildImage), Color.Orange);
         public string ChildName
         {
             get { return (string)GetValue(ChildNameProperty); }
@@ -63,8 +65,8 @@ namespace Fakka.Pos.Components.Children
 
         public Color BorderColor
         {
-            get => container.BackgroundColor;
-            set => container.BackgroundColor = value; 
+            get => (Color)GetValue(BorderColorProperty);
+            set => SetValue(BorderColorProperty, value);
         }
 
         private float _borderWidth;
@@ -77,6 +79,13 @@ namespace Fakka.Pos.Components.Children
                 container.Padding = new Thickness(_borderWidth);
             }
         }
+
+        public Color TextColor
+        {
+            get => (Color)GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value); 
+        }
+
         public ChildImage()
         {
             InitializeComponent();

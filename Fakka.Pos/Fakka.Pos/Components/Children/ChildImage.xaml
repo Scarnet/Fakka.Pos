@@ -17,13 +17,13 @@
     </ContentView.Resources>
 
     <Frame x:Name="container" Padding="1" Margin="0" HorizontalOptions="Center" 
-            VerticalOptions="Center" CornerRadius="{Binding Radius, Source=this}" BorderColor="Transparent" HasShadow="False">
+            VerticalOptions="Center" CornerRadius="{Binding Radius, Source=this}" BorderColor="{Binding BorderColor, Source={x:Reference this}}" HasShadow="False">
         <Grid>
             <Label x:Name="InitialsLabel" 
                                    IsVisible="False"
                                    HorizontalOptions="Center" 
                                    FontSize="Large" 
-                                   TextColor="White" 
+                                   TextColor="{Binding TextColor, Source={x:Reference this}}" 
                                    VerticalOptions="Center" 
                                    HorizontalTextAlignment="Center" 
                                    VerticalTextAlignment="Center" />
