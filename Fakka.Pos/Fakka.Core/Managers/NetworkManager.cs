@@ -12,7 +12,7 @@ namespace Fakka.Core.Managers
     {
         private readonly INetwork _networkProvider;
         private readonly ISessionManager _sessionManager;
-        private readonly int numberOfRetries = 0;
+        private readonly int numberOfRetries = 5;
         public NetworkManager(INetwork networkProvider, ISessionManager sessionManager)
         {
             _networkProvider = networkProvider;

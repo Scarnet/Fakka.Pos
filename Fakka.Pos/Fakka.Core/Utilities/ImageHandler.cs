@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Net.Http;
 using System.Diagnostics;
+using System.Drawing;
+using Image = System.Drawing.Image;
+using System.Threading;
 
 namespace Fakka.Core.Utilities
 {
@@ -34,7 +37,7 @@ namespace Fakka.Core.Utilities
             await stream.ReadAsync(bytes, 0, (int)stream.Length);
             return Convert.ToBase64String(bytes);
         }
-        
+
 
         public static string GetImageUri(string imageId, string imageContext)
         {
@@ -42,7 +45,7 @@ namespace Fakka.Core.Utilities
             return url;
         }
 
-        
+
 
         public static async Task<string> ImageUrlToBase64(string url)
         {
@@ -60,11 +63,32 @@ namespace Fakka.Core.Utilities
                     return Convert.ToBase64String(bytes);
                 }
             }
-            catch(HttpRequestException ex)
+            catch (HttpRequestException ex)
             {
                 Debug.WriteLine(ex);
-                return string.Empty; 
+                return string.Empty;
             }
         }
+
+        public static async Task<byte[]> ImageToBytesArray(string resourceId, System.Reflection.Assembly assembly)
+        {
+            try
+            {
+                var stream = assembly.GetManifestResourceStream(resourceId);
+                byte[] imageBytes;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    stream.CopyTo(ms);
+                    imageBytes = ms.ToArray();
+                }
+                return imageBytes;
+
+            }
+            catch (Exception ex)
+            {
+                return new byte[0];
+            }
+        }
+
     }
 }

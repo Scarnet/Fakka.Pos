@@ -261,14 +261,6 @@ namespace Fakka.Pos.ViewModels
         public DelegateCommand<ValidatableObject<string>> NameChangedCommand => new BaseCommandHandler<ValidatableObject<string>>(this,
             (name) =>
             {
-                _searchName.Value = _searchName.Value?.Trim() ?? string.Empty;
-                SearchChildren = new ObservableCollection<ChildProfile>(childrenProfiles.Where(profile =>
-               (profile.Name.ToLower().Contains(_searchName.Value.ToLower())
-                || profile.ParentName.ToLower().Contains(_searchName.Value.ToLower())) && profile.GradeId.ToLower() == _selectedGrade.Id.ToLower())
-                    .ToList());
-            },
-            () =>
-            {
                 bool validGrade = Grade?.Value != null;
                 bool validName = !SearchName?.Value.IsNullOrWhiteSpace() ?? false;
 
@@ -282,7 +274,17 @@ namespace Fakka.Pos.ViewModels
                     View.Alert(UiResources.Error, UiResources.SelectGradeMessage);
                 }
 
-                return validGrade && validName;
+                bool searchAllowed = validGrade && validName;
+
+
+                if (!searchAllowed)
+                    return;
+
+                _searchName.Value = _searchName.Value?.Trim() ?? string.Empty;
+                SearchChildren = new ObservableCollection<ChildProfile>(childrenProfiles.Where(profile =>
+               (profile.Name.ToLower().Contains(_searchName.Value.ToLower())
+                || profile.ParentName.ToLower().Contains(_searchName.Value.ToLower())) && profile.GradeId.ToLower() == _selectedGrade.Id.ToLower())
+                    .ToList());
             });
 
         public DelegateCommand<ValidatableObject<string>> CodeChangedCommand => new BaseCommandHandler<ValidatableObject<string>>(this,
@@ -522,10 +524,13 @@ namespace Fakka.Pos.ViewModels
                 foreach (var item in itemsResponse.Data.Value)
                     try
                     {
-                        item.LocalImage = await CacheMedia(item.Image, $"{item.GetType().Name}_{item.Id}");
+                        item.LocalImage = await CacheMedia(item.Image, $"{item.GetType().Name}_{item.Id}") ?? await ImageHandler.ImageToBytesArray("Fakka.Pos.Resources.stock_item.jpeg", GetType().Assembly);
+                        
                     }
                     catch (Exception ex)
                     {
+                        
+                        item.LocalImage = await ImageHandler.ImageToBytesArray("Fakka.Pos.Resources.stock_item.jpeg", GetType().Assembly);
                         Debug.WriteLine($"Caching {item.Name} image failed");
                         Crashes.TrackError(ex);
                     }

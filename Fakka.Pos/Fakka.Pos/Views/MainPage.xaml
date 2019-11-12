@@ -154,7 +154,7 @@
                                                          TotalPrice="{Binding TotalPrice}"
                                                          IncreasedCommand="{Binding LineItemsIncreasedCommand}" 
                                                          DecreasedCommand="{Binding LineItemsDecreasedCommand}"/>
-                            <Grid Grid.Row="2" Margin="10,5">
+                            <Grid Grid.Row="2" Margin="0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*" />
                                     <ColumnDefinition Width="4*" />

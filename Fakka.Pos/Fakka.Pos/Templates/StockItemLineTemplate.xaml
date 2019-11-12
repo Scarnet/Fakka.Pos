@@ -35,17 +35,10 @@
                     Command="{Binding LineDecreasedCommand, Source={x:Reference this}}" CommandParameter="{Binding .}" />
             </StackLayout>
 
-            <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" Margin="10" Text="{Binding Name}"/>
+            <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" Margin="10" LineBreakMode="TailTruncation" Text="{Binding Name}"/>
 
-            <Label Style="{StaticResource DefaultBoldBlackLabel}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Center" BackgroundColor="Transparent" Margin="10" >
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding TotalPrice, StringFormat='{0:N}'}" />
-                        <Span Text=" " />
-                        <Span Text="{resources:Translate RS}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            <Label Style="{StaticResource DefaultBoldBlackLabel}" Margin="10" HorizontalOptions="FillAndExpand" VerticalOptions="Center" 
+                   HorizontalTextAlignment="End" BackgroundColor="Transparent" Text="{Binding TotalPrice, StringFormat='{0:N}'}"  />
         </StackLayout>
     </ContentView.Content>
 </ContentView>

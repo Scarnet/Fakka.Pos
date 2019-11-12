@@ -81,7 +81,7 @@
                             <FormattedString>
                                 <Span Text="{Binding CurrentBalance}" />
                                 <Span Text=" " />
-                                <Span Text="{resources:Translate Ryial}" />
+                                <Span Text="{resources:Translate RS}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -95,7 +95,7 @@
                             <FormattedString>
                                 <Span Text="{Binding DailyLimit}" />
                                 <Span Text=" " />
-                                <Span Text="{resources:Translate Ryial}" />
+                                <Span Text="{resources:Translate RS}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>

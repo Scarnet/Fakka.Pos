@@ -30,16 +30,23 @@
                 </Label>
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                <children:ChildImage ChildImageSource="{Binding ChildImage}"
+            <Grid ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="15*" />
+                </Grid.ColumnDefinitions>
+                
+                <children:ChildImage Grid.Column="0"
+                                     ChildImageSource="{Binding ChildImage}"
                                      HasImage="{Binding ChildHasImage}"
                                      ChildName="{Binding ChildName}"
                                      ParentName="{Binding ParentName}"
                                      BorderColor="Orange"
                                      TextColor="Orange"
                                      FontSize="8"
-                                     Radius="10" />
-                <Label VerticalOptions="CenterAndExpand" FontSize="{StaticResource FontSizeSmall}">
+                                     Radius="15" />
+                
+                <Label Grid.Column="1" VerticalOptions="CenterAndExpand" FontSize="{StaticResource FontSizeSmall}">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{Binding ChildName}" />
@@ -48,7 +55,7 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-            </StackLayout>
+            </Grid>
         </StackLayout>
     </ContentView.Content>
 </ContentView>
